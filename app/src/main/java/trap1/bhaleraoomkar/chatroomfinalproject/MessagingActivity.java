@@ -42,6 +42,7 @@ public class MessagingActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference loginRef;
     private DatabaseReference messageRef;
+    private DatabaseReference newRef;
     private TextView welcome;
     private TextView onlineUsers;
     private String username;
@@ -93,6 +94,24 @@ public class MessagingActivity extends AppCompatActivity {
                 }
             }
             //onlineUsers.setText(getString(R.string.online, users.toString().substring(1, users.toString().length()-1)));
+        }
+
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+        }
+    };
+
+    ValueEventListener getLatLong = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            try {
+                lat = Double.parseDouble("" + dataSnapshot.child("latitude").getValue());
+                longi = Double.parseDouble("" + dataSnapshot.child("longitude").getValue());
+            }catch(Exception e){
+                lat = 1000.0;
+                longi = 1000.0;
+            }
         }
 
         @Override
@@ -179,6 +198,11 @@ public class MessagingActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        newRef = database.getReference(String.format("users/%s", username));
+        newRef.addListenerForSingleValueEvent(getLatLong);
+
+
 
     }
 

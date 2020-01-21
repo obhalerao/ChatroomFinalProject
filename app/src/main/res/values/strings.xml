@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Even More Fun Chatroom</string>
+    <string name="app_name">The Chatroom</string>
     <string name="welcome">Welcome, %s!</string>
     <string name="online">Users currently online: %s</string>
     <string name="username_key">com.trap1.bhaleraoomkar.chatbot.username</string>

@@ -50,11 +50,21 @@ public class OnlineUserAdapter extends RecyclerView.Adapter<OnlineUserAdapter.My
         User u = usersList.get(position);
         double lat = u.getLatitude();
         double longi = u.getLongitude();
-        double distanceKm = getDistance(lat, longi, MessagingActivity.lat, MessagingActivity.longi);
-        double distanceMi = distanceKm/1.60934;
-        holder.user.setText(u.getUsername());
-        holder.location.setText("Last seen in " + u.getCity() + ", " + u.getCountry());
-        holder.distance.setText(""+Math.round(distanceMi)+" miles away");
+        if(lat > 200 || longi > 200){
+            holder.user.setText(u.getUsername());
+            holder.location.setText("Last seen in an unknown city");
+            holder.distance.setText("Unknown distance away");
+        } else if(MessagingActivity.lat > 200 || MessagingActivity.longi > 200){
+            holder.user.setText(u.getUsername());
+            holder.location.setText("Last seen in " + u.getCity() + ", " + u.getCountry());
+            holder.distance.setText("Unknown distance away");
+        }else {
+            double distanceKm = getDistance(lat, longi, MessagingActivity.lat, MessagingActivity.longi);
+            double distanceMi = distanceKm / 1.60934;
+            holder.user.setText(u.getUsername());
+            holder.location.setText("Last seen in " + u.getCity() + ", " + u.getCountry());
+            holder.distance.setText("" + Math.round(distanceMi) + " miles away");
+        }
     }
 
     @Override

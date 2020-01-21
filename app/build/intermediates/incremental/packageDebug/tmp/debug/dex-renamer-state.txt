@@ -1,4 +1,4 @@
-#Sun Jan 19 21:43:00 EST 2020
-base.0=C\:\\Users\\obhal\\AndroidStudioProjects\\ChatroomFinalProject\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+#Tue Jan 21 10:07:10 EST 2020
+base.0=C\:\\Users\\1707619\\AndroidStudioProjects\\ChatroomFinalProject\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex

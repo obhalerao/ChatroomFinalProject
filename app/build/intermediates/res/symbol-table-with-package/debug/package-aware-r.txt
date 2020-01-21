@@ -1403,6 +1403,7 @@ layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 layout user_list_row
 mipmap ic_launcher
+mipmap ic_launcher_foreground
 mipmap ic_launcher_round
 string abc_action_bar_home_description
 string abc_action_bar_up_description

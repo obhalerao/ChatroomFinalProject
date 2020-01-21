@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference loginRef;
     private DatabaseReference messageRef;
+    private DatabaseReference newRef;
     private Button login;
     private Button signup;
     private EditText username;
@@ -60,7 +61,13 @@ public class MainActivity extends AppCompatActivity {
     ValueEventListener checkLast = new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-            long lastMessage = (Long)dataSnapshot.child("lastMessage/id").getValue();
+            Object temp = dataSnapshot.child("lastMessage/id").getValue();
+            long lastMessage;
+            if(temp == null){
+                lastMessage = -1;
+            }else{
+                lastMessage = (Long)dataSnapshot.child("lastMessage/id").getValue();
+            }
             Intent send = new Intent(getApplicationContext(), NotificationService.class);
             send.putExtra("id", lastMessage);
             startService(send);
@@ -87,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
                         toast.show();
                     }else{
                         Map<String, Object> updates = new HashMap<String, Object>();
-                        DatabaseReference newRef = database.getReferenceFromUrl(snapshot.child(usn).getRef().toString());
+                        System.out.println("hi");
+                        newRef = database.getReferenceFromUrl(snapshot.child(usn).getRef().toString());
                         updates.put("password", pw);
                         updates.put("online","false");
                         newRef.updateChildren(updates);
@@ -113,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
             final String pw = password.getText().toString();
             loginRef.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                public void onDataChange(@NonNull final DataSnapshot snapshot) {
                     if (usn.equals("") || !snapshot.child(usn).exists() || !((String)snapshot.child(usn).child("password").getValue()).equals(pw)) {
                         username.setText("");
                         password.setText("");
@@ -127,14 +135,34 @@ public class MainActivity extends AppCompatActivity {
                     }else {
                         username.setText("");
                         password.setText("");
-                        Map<String, Object> updates = new HashMap<String, Object>();
-                        DatabaseReference newRef = database.getReferenceFromUrl(snapshot.child(usn).getRef().toString());
-                        updates.put("online","true");
-                        newRef.updateChildren(updates);
-                        updateLastLocation();
-                        Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
-                        intent.putExtra(getString(R.string.username_key), usn);
-                        startActivity(intent);
+                        DatabaseReference tempRef = database.getReference(String.format("users/%s", usn));
+                        System.out.println(usn);
+                        tempRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                if(!dataSnapshot.child("latitude").exists()){
+                                    Map<String, Object> updates = new HashMap<String, Object>();
+                                    updates.put("latitude", 1000.0);
+                                    updates.put("longitude", 1000.0);
+                                    updates.put("city", "null");
+                                    updates.put("country", "null");
+                                    newRef.updateChildren(updates);
+                                }
+                                updateLastLocation();
+                                Map<String, Object> updates = new HashMap<String, Object>();
+                                newRef = database.getReferenceFromUrl(snapshot.child(usn).getRef().toString());
+                                updates.put("online","true");
+                                newRef.updateChildren(updates);
+                                Intent intent = new Intent(getApplicationContext(), MessagingActivity.class);
+                                intent.putExtra(getString(R.string.username_key), usn);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 }
 
