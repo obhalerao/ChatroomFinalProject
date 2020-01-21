@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "786599947576",
+    "firebase_url": "https://chatroomfinalproject.firebaseio.com",
+    "project_id": "chatroomfinalproject",
+    "storage_bucket": "chatroomfinalproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786599947576:android:9492abeff8f1b6560b25cd",
+        "android_client_info": {
+          "package_name": "trap1.bhaleraoomkar.chatroomfinalproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "786599947576-nm4r5bp7gfc7g3f2vn8351bpjlvpocl8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "trap1.bhaleraoomkar.chatroomfinalproject",
+            "certificate_hash": "d134eb7a0d4dee7c13f776e6b3a5c8f325e36bd4"
+          }
+        },
+        {
+          "client_id": "786599947576-v5nfgqh5fr9flkqtr4g9raj491hskliu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDI39kY96G820AdB3RDAj771eacYuqYeYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "786599947576-v5nfgqh5fr9flkqtr4g9raj491hskliu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
